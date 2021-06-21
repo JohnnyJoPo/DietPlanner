@@ -1,0 +1,54 @@
+6/21/2021
+DietPlanner
+
+IDEA -> A web based application that allows users to plan a weekly diet using HTML, CSS, and JavaScript
+
+- Basic form interface for entering data
+-- Food item to add (required)
+-- Portion size / calories (optional)
+-- Date (required)
+-- Meal time (required)
+-- Button to add data to the weekly chart and local storage
+-- Button to reset form
+
+- Weekly chart to display all added data
+-- Grid based layout: Days of the week left to right, meal times from top to bottom
+--- Meal times are Breakfast, Lunch, Dinner, and Other
+-- Show only one week at a time
+--- Add buttons to switch to the previous or next week
+-- On page load, populate data from local storage
+-- Each entry is an element in the chart that can be clicked to be selected
+--- When element is selected...
+---- Enable a button to edit/move the selected element
+---- Enable a button to copy the selected element
+----- If either of the two above buttons are clicked...
+------ Take the data from the element to repopulate the data entry form
+------ If there is already data in the data entry form, get user confirmation to overwrite data
+------ If the edit/move button was clicked...
+------- Delete the selected element from the chart
+------ If the copy button was clicked...
+------- Keep the selected element in the chart
+---- Enable a button to delete the selected element
+---- Enable a checkbox to confirm that a planned meal was consumed
+-- Button to import / export all entered data via text or json file
+--- Check data integrity of imported file, throw error if the check fails
+--- Update local storage on import, get user confirmation to overwrite data if chart already contains data
+-- Color elements based on status
+--- Yellow: Not Consumed
+--- Green: Consumed
+--- Blue: Selected
+
+- Information display for the overall week
+-- Updates with the chart by week
+-- Display for all planned items / calories
+-- Display for all consumed items / calories
+
+- Other features to possibly implement in the future
+-- Daily weight / BMI input
+-- Draw a chart based on input over time
+--- Display by week, month, year, or all time
+-- Weekly calorie goals
+--- Display goal to total calories consumed over the week
+-- Option for multiple users
+-- Highlight current day in chart
+-- Jump to week dropdown box
