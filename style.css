@@ -61,8 +61,8 @@ button {
 }
 
 #chart section {
+    padding: 1em;
     border: 2px solid #2f2f7f7f;
-    height: 80px;
 }
 
 #chart section:hover {
@@ -70,7 +70,6 @@ button {
 }
 
 #chart section p {
-    margin: 1em 0 0 0;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 1.5em;
 }
@@ -124,10 +123,132 @@ button {
     grid-row: 5;
 }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 600px) {
+    #dataEntry {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(5, auto);
+    }
 
+    .leftAlign {grid-column: 1;}
+
+    .rightAlign {grid-column: 2 / span 2;}
+
+    #addBtn, #resetBtn {grid-column: 4 / span 3;}
+
+    #addBtn {grid-row: 1 / span 2;}
+
+    #resetBtn {grid-row: 3 / span 2;}
+
+    #prevBtn, #nextBtn {grid-row: 5;}
+
+    #prevBtn {grid-column: 1 / span 3;}
+
+    #nextBtn {grid-column: 4 / span 3;}
+
+    #chart {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto auto;
+    }
+
+    #chart section:hover {
+        background-color: #dfcfff;
+    }
+    
+    .hidden {display: block;}
+
+    #sun, #tue, #thu, #sat {grid-column: 1;}
+
+    #mon, #wed, #fri, #totals {grid-column: 2;}
+
+    #sun, #mon {grid-row: 1;}
+
+    #tue, #wed {grid-row: 2;}
+
+    #thu, #fri {grid-row: 3;}
+
+    #sat, #totals {grid-row: 4;}
+
+    #dataManipulation {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: 1fr 1fr 10px 1fr;
+    }
+    
+    #consumedGrp {
+        grid-column: 1 / span 6;
+        grid-row: 1;
+    }
+    
+    #copyBtn, #editBtn, #delBtn {grid-row: 2}
+
+    #copyBtn {grid-column: 1 / span 2;}
+    
+    #editBtn {grid-column: 3 / span 2;}
+    
+    #delBtn {grid-column: 5 / span 2;}
+    
+    #importBtn {
+        grid-column: 1 / span 3;
+        grid-row: 4;
+    }
+    
+    #exportBtn {
+        grid-column: 4 / span 3;
+        grid-row: 4;
+    }
 }
 
 @media screen and (min-width: 1000px) {
+    #dataEntry {
+        grid-template-columns: 10% 1fr 30% 30%;
+        grid-template-rows: repeat(4, auto);
+    }
 
+    .leftAlign {grid-column: 1;}
+
+    .rightAlign {grid-column: 2;}
+
+    #addBtn, #resetBtn {grid-column: 3;}
+
+    #addBtn {grid-row: 1 / span 2;}
+
+    #resetBtn {grid-row: 3 / span 2;}
+
+    #prevBtn, #nextBtn {grid-column: 4;}
+
+    #prevBtn {grid-row: 1 / span 2;}
+
+    #nextBtn {grid-row: 3 / span 2;}
+
+    #chart {
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: auto auto;
+    }
+
+    #sun, #mon, #tue, #wed, #thu, #fri, #sat {grid-row: 1;}
+    #sun {grid-column: 1;}
+    #mon {grid-column: 2;}
+    #tue {grid-column: 3;}
+    #wed {grid-column: 4;}
+    #thu {grid-column: 5;}
+    #fri {grid-column: 6;}
+    #sat {grid-column: 7;}
+    #totals {
+        grid-column: 1 / span 7;
+        grid-row: 2;
+    }
+
+    #dataManipulation {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    
+    #consumedGrp, #copyBtn {grid-column: 1;}
+    
+    #editBtn, #delBtn {grid-column: 2;}
+
+    #importBtn, #exportBtn {grid-column: 3;}
+
+    #consumedGrp, #editBtn, #importBtn {grid-row: 1;}
+
+    #copyBtn, #delBtn, #exportBtn {grid-row: 2;}
 }
