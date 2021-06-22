@@ -60,20 +60,22 @@
                 <p>Saturday</p>
                 <div class="hidden"></div>
             </section>
-            <p id="totalItems">Total Items Consumed:</p>
-            <p id="totalCalories">Total Calories Consumed:</p>
+            <div id=totals>
+                <p id="totalItems">Total Items Consumed:</p>
+                <p id="totalCalories">Total Calories Consumed:</p>
+            </div>
         </div>
 
         <div id="dataManipulation">
             <div id=consumedGrp>
-                <label for="consumedChk">Item Consumed</label>
-                <input type="checkbox" id="consumedChk">
+                <label for="consumedChk" id="consumedChkLbl" class="disabledElement">Item Consumed </label>
+                <input type="checkbox" id="consumedChk" disabled>
             </div>
-            <button type="button" id="copyBtn">Copy Selected Item</button>
-            <button type="button" id="editBtn">Edit / Move Selected Item</button>
-            <button type="button" id="delBtn">Delete Selected Item</button>
+            <button type="button" id="copyBtn" disabled>Copy Selected Item</button>
+            <button type="button" id="editBtn" disabled>Edit / Move Selected Item</button>
+            <button type="button" id="delBtn" disabled>Delete Selected Item</button>
             <button type="button" id="importBtn">Import Data from File</button>
-            <button type="button" id="exportBtn">Export Data to File</button>
+            <button type="button" id="exportBtn" disabled>Export Data to File</button>
         </div>
     </div>
     <script src="script.js"></script>

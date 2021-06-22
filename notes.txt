@@ -59,4 +59,12 @@ IDEA -> A web based application that allows users to plan a weekly diet using HT
 --- Clicking one of these boxes will expand it and display all data entered for that day
 -- JavaScript will be used to apply and unapply the .hidden class, to hide data and make the layout less bloated and more compact
 --- Add window event listener for viewport resizing to check new dimensions and show/hide data as needed
---- When width crosses a certain threshold (640px for tablets), unhide elements 
+--- When width crosses a certain threshold (640px for tablets), unhide elements
+
+- Styling Ideas
+-- Two font families
+--- Gill Sans, Gill Sans MT, Calibri, Trebuchet MS, sans-serif
+--- Arial, Helvetica, sans-serif
+-- Color ideas
+--- Thinking a shade of light pinks, yellows, or blues
+--- Did research: Will try blues since blue is an appetite suppressant (encouraging the idea of weight loss)
