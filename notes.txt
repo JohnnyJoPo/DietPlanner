@@ -52,3 +52,11 @@ IDEA -> A web based application that allows users to plan a weekly diet using HT
 -- Option for multiple users
 -- Highlight current day in chart
 -- Jump to week dropdown box
+
+- Mobile design
+-- Mobile version will rely more on JavaScript to create a clean UI
+-- Instead of a chart with information being displayed at all times, the mobile design will show days of the week in 7 stacked boxes
+--- Clicking one of these boxes will expand it and display all data entered for that day
+-- JavaScript will be used to apply and unapply the .hidden class, to hide data and make the layout less bloated and more compact
+--- Add window event listener for viewport resizing to check new dimensions and show/hide data as needed
+--- When width crosses a certain threshold (640px for tablets), unhide elements 

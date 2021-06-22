@@ -3,13 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diet Planner</title>
+    <title>Weekly Diet Planner</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <div id="wrapper">
         <p id="scriptCheck">This page requires JavaScript to work. Please enable JavaScript and reload this page.</p>
-        <!-- Continue here -->
+        <header>
+            <h1>Weekly Diet Planner</h1>
+        </header>
+        <form id="dataEntry">
+            <label for="item" class="leftAlign">Food Item:</label>
+            <input type="text" id="item" class="rightAlign">
+            <label for="calories" class="leftAlign">Calories:</label>
+            <input type="text" id="calories" class="rightAlign">
+            <label for="mealDate" class="leftAlign">Date:</label>
+            <input type="date" id="mealDate" class="rightAlign">
+            <label for="mealTime" class="leftAlign">Meal Time:</label>
+            <select id="mealTime" class="rightAlign">
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="other">Other</option>
+            </select>
+            <button type="button" id="addBtn">Add Meal to Chart</button>
+            <button type="reset" id="resetBtn">Reset Form</button>
+            <button type="button" id="prevBtn">Previous Week</button>
+            <button type="button" id="nextBtn">Next Week</button>           
+        </form>
+        <div id="chart">
+            <section id="sun">
+                <p>Sunday</p>
+                <div class="hidden"></div>
+            </section>
+            <section id="mon">
+                <p>Monday</p>
+                <div class="hidden"></div>
+            </section>
+            <section id="tue">
+                <p>Tuesday</p>
+                <div class="hidden"></div>
+            </section>
+            <section id="wed">
+                <p>Wednesday</p>
+                <div class="hidden"></div>
+            </section>
+            <section id="thu">
+                <p>Thursday</p>
+                <div class="hidden"></div>
+            </section>
+            <section id="fri">
+                <p>Friday</p>
+                <div class="hidden"></div>
+            </section>
+            <section id="sat">
+                <p>Saturday</p>
+                <div class="hidden"></div>
+            </section>
+            <p id="totalItems">Total Items Consumed:</p>
+            <p id="totalCalories">Total Calories Consumed:</p>
+        </div>
+
+        <div id="dataManipulation">
+            <div id=consumedGrp>
+                <label for="consumedChk">Item Consumed</label>
+                <input type="checkbox" id="consumedChk">
+            </div>
+            <button type="button" id="copyBtn">Copy Selected Item</button>
+            <button type="button" id="editBtn">Edit / Move Selected Item</button>
+            <button type="button" id="delBtn">Delete Selected Item</button>
+            <button type="button" id="importBtn">Import Data from File</button>
+            <button type="button" id="exportBtn">Export Data to File</button>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

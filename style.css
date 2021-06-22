@@ -2,3 +2,90 @@
     margin: 0px;
     padding: 0px;
 }
+
+body {margin: 10px;}
+
+#wrapper {width: 100%;}
+
+#dataEntry {
+    margin: 0px 0px 20px 0px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.leftAlign {grid-column: 1 / span 2;}
+
+.rightAlign {grid-column: 3 / span 4;}
+
+#addBtn, #prevBtn {grid-column: 1 / span 3;}
+
+#resetBtn, #nextBtn {grid-column: 4 / span 3;}
+
+#chart {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+#chart section {
+    outline: 1px solid black;
+    height: 50px;
+}
+
+#chart section p {
+    padding: 15px 0 0 0;
+}
+
+#chart p {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#dataManipulation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 10px 1fr;
+
+}
+
+#consumedGrp {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    text-align: center;
+    padding: 10px 0 0 0;
+}
+
+#copyBtn {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#editBtn {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#delBtn {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+}
+
+#importBtn {
+    grid-column: 1;
+    grid-row: 5;
+}
+
+#exportBtn {
+    grid-column: 2;
+    grid-row: 5;
+}
+
+@media screen and (min-width: 640px) {
+
+}
+
+@media screen and (min-width: 1000px) {
+
+}
