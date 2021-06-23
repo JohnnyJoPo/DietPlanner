@@ -12,53 +12,70 @@
         <header>
             <h1>Weekly Diet Planner</h1>
         </header>
-        <form id="dataEntry">
-            <label for="item" class="leftAlign">Food Item:</label>
-            <input type="text" id="item" class="rightAlign">
-            <label for="calories" class="leftAlign">Calories:</label>
-            <input type="text" id="calories" class="rightAlign">
-            <label for="mealDate" class="leftAlign">Date:</label>
-            <input type="date" id="mealDate" class="rightAlign">
-            <label for="mealTime" class="leftAlign">Meal Time:</label>
-            <select id="mealTime" class="rightAlign">
-                <option value="breakfast">Breakfast</option>
-                <option value="lunch">Lunch</option>
-                <option value="dinner">Dinner</option>
-                <option value="other">Other</option>
-            </select>
-            <button type="button" id="addBtn">Add Meal to Chart</button>
-            <button type="reset" id="resetBtn">Reset Form</button>
-            <button type="button" id="prevBtn">Previous Week</button>
-            <button type="button" id="nextBtn">Next Week</button>           
-        </form>
+        <div id="dataEntry">
+            <p id="inputError">Error</p>
+            <form id="entryForm">
+                <label for="item" class="leftAlign">Food Item:</label>
+                <input type="text" id="item" class="rightAlign">
+                <label for="calories" class="leftAlign">Calories:</label>
+                <input type="text" id="calories" class="rightAlign">
+                <label for="foodDate" class="leftAlign">Date:</label>
+                <input type="date" id="foodDate" class="rightAlign">
+                <label for="foodTime" class="leftAlign">Meal Time:</label>
+                <select id="foodTime" class="rightAlign">
+                    <option value="breakfast">Breakfast</option>
+                    <option value="lunch">Lunch</option>
+                    <option value="dinner">Dinner</option>
+                    <option value="other">Other</option>
+                </select>
+                <button type="button" id="addBtn">Add Food to Chart</button>
+                <button type="reset" id="resetBtn">Reset Form</button>
+                <button type="button" id="prevBtn">Previous Week</button>
+                <button type="button" id="nextBtn">Next Week</button>           
+            </form>
+        </div>
         <div id="chart">
             <section id="sun">
-                <p>Sunday</p>
+                <h2>Sunday</h2>
+                <p></p>
                 <div class="hidden"></div>
+                <p class="hidden"></p>
             </section>
             <section id="mon">
-                <p>Monday</p>
+                <h2>Monday</h2>
+                <p></p>
                 <div class="hidden"></div>
+                <p class="hidden"></p>
             </section>
             <section id="tue">
-                <p>Tuesday</p>
+                <h2>Tuesday</h2>
+                <p></p>
                 <div class="hidden"></div>
+                <p class="hidden"></p>
             </section>
             <section id="wed">
-                <p>Wednesday</p>
+                <h2>Wednesday</h2>
+                <p></p>
                 <div class="hidden"></div>
+                <p class="hidden"></p>
             </section>
             <section id="thu">
-                <p>Thursday</p>
+                <h2>Thursday</h2>
+                <p></p>
                 <div class="hidden"></div>
+                <p class="hidden"></p>
             </section>
             <section id="fri">
-                <p>Friday</p>
+                <h2>Friday</h2>
+                <p></p>
                 <div class="hidden"></div>
+                <p class="hidden"></p>
             </section>
             <section id="sat">
-                <p>Saturday</p>
+                <h2>Saturday</h2>
+                <p></p>
                 <div class="hidden"></div>
+                <p class="hidden"></p>
             </section>
             <div id=totals>
                 <p id="totalItems">Total Items Consumed:</p>
