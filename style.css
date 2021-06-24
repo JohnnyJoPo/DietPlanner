@@ -74,7 +74,7 @@ button {
 }
 
 #chart section {
-    padding: 1em;
+    padding: 0.5em;
     border: 2px solid #2f2f7f7f;
 }
 
@@ -96,6 +96,36 @@ button {
 
 .hidden {display: none;}
 
+.dataNode {
+    margin: 10px 0 0 0;
+    padding: 10px 5px;
+    border: 4px solid #2f2f007f;
+    border-radius: 10px;
+    background-color: #ffffcf;
+}
+
+.dataNode:hover {
+    background-color: #ffff00;
+}
+
+.consumed {
+    border: 4px solid #002f007f;
+    background-color: #bfffbf;
+}
+
+.consumed:hover {
+    background-color: #4fff4f;
+}
+
+.selected {
+    border: 4px solid #001f2f7f;
+    background-color: #00ffff;
+}
+
+.selected:hover {
+    background-color: #00ffff;
+}
+
 #dataManipulation {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 10px 1fr;
@@ -108,7 +138,7 @@ button {
     text-align: center;
 }
 
-.disabledElement {
+#consumedChkLbl {
     opacity: 50%;
 }
 
@@ -225,15 +255,15 @@ button {
 
     .rightAlign {grid-column: 2;}
 
-    #addBtn, #resetBtn {grid-column: 3;}
+    #addBtn, #prevBtn {grid-column: 3;}
 
     #addBtn {grid-row: 1 / span 2;}
 
-    #resetBtn {grid-row: 3 / span 2;}
+    #prevBtn {grid-row: 3 / span 2;}
 
-    #prevBtn, #nextBtn {grid-column: 4;}
+    #resetBtn, #nextBtn {grid-column: 4;}
 
-    #prevBtn {grid-row: 1 / span 2;}
+    #resetBtn {grid-row: 1 / span 2;}
 
     #nextBtn {grid-row: 3 / span 2;}
 

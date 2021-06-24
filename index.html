@@ -23,10 +23,10 @@
                 <input type="date" id="foodDate" class="rightAlign">
                 <label for="foodTime" class="leftAlign">Meal Time:</label>
                 <select id="foodTime" class="rightAlign">
-                    <option value="breakfast">Breakfast</option>
-                    <option value="lunch">Lunch</option>
-                    <option value="dinner">Dinner</option>
-                    <option value="other">Other</option>
+                    <option value="0">Breakfast</option>
+                    <option value="1">Lunch</option>
+                    <option value="2">Dinner</option>
+                    <option value="3">Other</option>
                 </select>
                 <button type="button" id="addBtn">Add Food to Chart</button>
                 <button type="reset" id="resetBtn">Reset Form</button>
@@ -85,7 +85,7 @@
 
         <div id="dataManipulation">
             <div id=consumedGrp>
-                <label for="consumedChk" id="consumedChkLbl" class="disabledElement">Item Consumed </label>
+                <label for="consumedChk" id="consumedChkLbl">Item Consumed </label>
                 <input type="checkbox" id="consumedChk" disabled>
             </div>
             <button type="button" id="copyBtn" disabled>Copy Selected Item</button>
