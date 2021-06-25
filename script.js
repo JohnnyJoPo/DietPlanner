@@ -1,12 +1,8 @@
 // TO-DO
-// Get file stream functionaliy working with import and export buttons
 // Fix error: When pressing Enter while the add button is in focus, it tries to add the item twice
 //    Use .reset() method on form element
 //    Write code for reset button
 // Construct interactivity with mobile design that isn't present in tablet and desktop layouts
-// Set up local storage functionality
-//    Load json from local storage when page is loaded
-//    Save json to local storage whenever foodArray changes
 // Add paragraph elements below each day for daily calorie totals
 
 "use strict"
@@ -19,6 +15,7 @@ var inDate = document.getElementById("foodDate");
 var inMealTime = document.getElementById("foodTime");
 var selectedNode;
 var selectedFoodIndex;
+const reader = new FileReader();
 
 function Food(foodItem, foodCal, foodDate, foodTime, foodMilliseconds, foodConsumed){
     this.item = foodItem;
@@ -27,6 +24,15 @@ function Food(foodItem, foodCal, foodDate, foodTime, foodMilliseconds, foodConsu
     this.mealTime = foodTime;
     this.milliseconds = foodMilliseconds;
     this.consumed = foodConsumed;
+}
+
+function setToday(){
+    let newDay = today.getDate();
+    let newMonth = today.getMonth() + 1;
+    let newYear = today.getFullYear();
+    let offset = today.getTimezoneOffset();
+    let newDate = `${newYear}-${newMonth}-${newDay}`;
+    today = new Date(Date.parse(newDate) + (offset * 60000));
 }
 
 function clearChildNodes(parent) {
@@ -82,7 +88,7 @@ function setChart(displayDate) {
             }
         }
     }
-
+    saveToStorage();
     return startDay;
 }
 
@@ -143,6 +149,10 @@ function deleteNode() {
     selectedNode.removeEventListener("click", selectNode.eventRef);
     selectedNode.remove();
     foodArray.splice(selectedFoodIndex, 1);
+    if(foodArray.length === 0){
+        document.getElementById("exportBtn").disabled = true;
+    }
+    today = setChart(today);
 }
 
 function copyNode() {
@@ -153,7 +163,7 @@ function copyNode() {
     inItem.focus();
 }
 
-function moveNode() {
+function editNode() {
     copyNode();
     deleteNode();
 }
@@ -162,7 +172,7 @@ function addFood() {
     let tempDate = new Date(inDate.value);
     let offset = tempDate.getTimezoneOffset();
     let targetDate = new Date(Date.parse(inDate.value) + (offset * 60000));
-    let newFood = new Food(inItem.value, inCalories.value, inDate.value, parseInt(inMealTime.value), targetDate.getTime(), false);
+    let newFood = new Food(inItem.value, parseInt(inCalories.value), inDate.value, parseInt(inMealTime.value), targetDate.getTime(), false);
     document.getElementById("exportBtn").disabled = false;
     foodArray.push(newFood);
     foodArray.sort(sortFood);
@@ -217,6 +227,96 @@ let nextWeek = function () {
     today = setChart(newWeek);
 }
 
+function exportData(){
+    const saveLink = document.createElement("a");
+    let outData = JSON.stringify(foodArray);
+    const outFile = new Blob([outData], {type:"text/plain"});
+    saveLink.href = URL.createObjectURL(outFile);
+    saveLink.download = "DietPlanner_data.json"
+    saveLink.click();
+    saveLink.remove();
+}
+
+function importData(){
+    const inFile = this.files[0];
+    if(inFile){
+        reader.readAsText(inFile);
+    }
+}
+
+function processImport(){
+    let inputStream = reader.result;
+    let dataArray;
+    try{
+        dataArray = JSON.parse(inputStream);
+    }
+    catch(error){
+        alert("Warning: The selected file does not contain valid json data.")
+        return;
+    }
+    let validFlag;
+    for(let i=0; i < dataArray.length; i++){
+        validFlag = validateImport(dataArray[i]);
+        if(validFlag === false){
+            break;
+        }
+    }
+    if(validFlag){
+        foodArray = dataArray;
+        document.getElementById("exportBtn").disabled = false;
+        today = setChart(today);
+    }
+}
+
+function validateImport(inObject){
+    if(typeof(inObject) !== "object"){
+        return false;
+    }
+    let propertyArray = Object.getOwnPropertyNames(inObject);
+    if(propertyArray.length !== 6){
+        return false;
+    }
+    let propertyCheckArray = ["item", "calories", "date", "mealTime", "milliseconds", "consumed"];
+    for(let i=0; i < 6; i++){
+        if(propertyArray[i] !== propertyCheckArray[i]){
+            return false;
+        }
+    }
+    try{
+        if(typeof(inObject.calories) !== "number" || typeof(inObject.mealTime) !== "number" || typeof(inObject.milliseconds) !== "number"){
+            return false;
+        }
+        if(typeof(inObject.item) !== "string" || typeof(inObject.date) !== "string"){
+            return false;
+        }
+        if(inObject.consumed === true || inObject.consumed === false){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    catch(error){
+        return false;
+    }
+}
+
+function loadFromStorage(){
+    let dietData = localStorage.getItem("dietData");
+    foodArray = JSON.parse(dietData);
+    if(!foodArray){
+        foodArray = [];
+    }
+    else if(foodArray.length !== 0){
+        document.getElementById("exportBtn").disabled = false;
+    }
+}
+
+function saveToStorage(){
+    let dietData = JSON.stringify(foodArray);
+    localStorage.setItem("dietData", dietData);
+}
+
 function setEvents() {
     let itemTxt = document.getElementById("item");
     let calTxt = document.getElementById("calories");
@@ -228,6 +328,7 @@ function setEvents() {
     let editBtn = document.getElementById("editBtn");
     let delBtn = document.getElementById("delBtn");
     let importBtn = document.getElementById("importBtn");
+    let fileInput = document.getElementById("fileInput");
     let exportBtn = document.getElementById("exportBtn");
 
     // Uncomment these as new functions are written
@@ -248,16 +349,21 @@ function setEvents() {
     nextBtn.addEventListener("click", nextWeek);
     consumedChk.addEventListener("change", toggleConsumed);
     copyBtn.addEventListener("click", copyNode);
-    // editBtn.addEventListener("click", myFunction);
+    editBtn.addEventListener("click", editNode);
     delBtn.addEventListener("click", deleteNode);
-    // importBtn.addEventListener("click", myFunction);
-    // exportBtn.addEventListener("click", myFunction);
+    importBtn.addEventListener("click", function(){
+        fileInput.click();
+    });
+    fileInput.addEventListener("change", importData);
+    exportBtn.addEventListener("click", exportData);
+    reader.addEventListener("load", processImport);
 }
 
 function init(){
     setEvents();
+    setToday();
+    loadFromStorage();
     document.getElementById("scriptCheck").remove();
-    // loadStorage();
     today = setChart(today);
 }
 
