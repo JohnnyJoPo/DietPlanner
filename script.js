@@ -1,20 +1,21 @@
 // TO-DO
-// Fix error: When pressing Enter while the add button is in focus, it tries to add the item twice
-//    Use .reset() method on form element
-//    Write code for reset button
-// Construct interactivity with mobile design that isn't present in tablet and desktop layouts
-// Add paragraph elements below each day for daily calorie totals
+// Reorganize functions
+// Add documentation
 
 "use strict"
 
 var today = new Date();
 var foodArray = [];
+var consumedArray = [];
+var totalConsumed = 0;
+var sizeToggle = false;
 var inItem = document.getElementById("item");
 var inCalories = document.getElementById("calories");
 var inDate = document.getElementById("foodDate");
 var inMealTime = document.getElementById("foodTime");
 var selectedNode;
 var selectedFoodIndex;
+var selectedDay;
 const reader = new FileReader();
 
 function Food(foodItem, foodCal, foodDate, foodTime, foodMilliseconds, foodConsumed){
@@ -49,13 +50,18 @@ function setChart(displayDate) {
     let mealTimeArray =["Breakfast", "Lunch", "Dinner", "Other"];
     let daySectionArray = [];
     let dayContentArray = [];
+    let dayCalorieArray = [];
+    let totalCalories = 0;
+    totalConsumed = 0;
     let dayMillisecondArray = [];
     deselectNode();
-    for(let i=0; i < week.length; i++) {
+    for(let i=0; i < 7; i++) {
         let currentDay = new Date(startDay.getTime() + (i * 86400000));
         daySectionArray[i] = document.getElementById(week[i]);
         dayContentArray[i] = daySectionArray[i].children;
         dayContentArray[i][1].innerText = `${currentDay.getMonth() + 1} / ${currentDay.getDate()} / ${currentDay.getFullYear()}`
+        dayCalorieArray[i] = 0;
+        consumedArray[i] = 0;
         dayMillisecondArray[i] = currentDay.getTime();
         clearChildNodes(dayContentArray[i][2]);
     }
@@ -64,6 +70,10 @@ function setChart(displayDate) {
         if(startDay.getTime() <= foodArray[i].milliseconds && foodArray[i].milliseconds < (startDay.getTime() + 604800000)) {
             for(let i2=0; i2 < 7; i2++) {
                 if(foodArray[i].milliseconds === dayMillisecondArray[i2]) {
+                    dayCalorieArray[i2] += foodArray[i].calories;
+                    if(foodArray[i].consumed){
+                        consumedArray[i2] += foodArray[i].calories;
+                    }
                     let newDataNode = document.createElement("div");
                     newDataNode.classList.add("dataNode");
                     if(foodArray[i].consumed) {
@@ -81,13 +91,21 @@ function setChart(displayDate) {
                     dayContentArray[i2][2].appendChild(newDataNode);
                     
                     newDataNode.addEventListener("click", newDataNode.eventRef = function(){
-                        selectNode(newDataNode, i);
+                        selectNode(newDataNode, i, i2);
                     });
                     break;
                 }
             }
         }
     }
+    for(let i=0; i < 7; i++){
+        document.getElementsByClassName("dailyCalories")[i].innerText = dayCalorieArray[i];
+        document.getElementsByClassName("dailyConsumed")[i].innerText = consumedArray[i];
+        totalCalories += dayCalorieArray[i];
+        totalConsumed += consumedArray[i];
+    }
+    document.getElementById("totalCalories").innerText = totalCalories;
+    document.getElementById("totalConsumed").innerText = totalConsumed;
     saveToStorage();
     return startDay;
 }
@@ -103,6 +121,9 @@ let sortFood = function (a, b) {
 }
 
 function deselectNode(){
+    if(document.getElementsByClassName("selected")[0]){
+        document.getElementsByClassName("selected")[0].classList.remove("selected");
+    }
     document.getElementById("consumedChk").disabled = true;
     document.getElementById("consumedChkLbl").style.opacity = "50%";
     document.getElementById("copyBtn").disabled = true;
@@ -110,14 +131,12 @@ function deselectNode(){
     document.getElementById("delBtn").disabled = true;
 }
 
-function selectNode(node, foodIndex) {
-    let nodeArray = document.getElementsByClassName("dataNode");
-    for(let i=0; i < nodeArray.length; i++){
-        nodeArray[i].classList.remove("selected");
-    }
+function selectNode(node, foodIndex, day) {
+    deselectNode();
     node.classList.add("selected");
     selectedNode = node;
     selectedFoodIndex = foodIndex;
+    selectedDay = day;
     consumedChk = document.getElementById("consumedChk");
     consumedChk.disabled = false;
     document.getElementById("consumedChkLbl").style.opacity = "100%";
@@ -137,11 +156,18 @@ function toggleConsumed() {
     if(consumedChk.checked){
         selectedNode.classList.add("consumed");
         foodArray[selectedFoodIndex].consumed = true;
+        consumedArray[selectedDay] += foodArray[selectedFoodIndex].calories;
+        totalConsumed += foodArray[selectedFoodIndex].calories;
     }
     else{
         selectedNode.classList.remove("consumed");
         foodArray[selectedFoodIndex].consumed = false;
+        consumedArray[selectedDay] -= foodArray[selectedFoodIndex].calories;
+        totalConsumed -= foodArray[selectedFoodIndex].calories;
     }
+    document.getElementsByClassName("dailyConsumed")[selectedDay].innerText = consumedArray[selectedDay];
+    document.getElementById("totalConsumed").innerText = totalConsumed;
+    saveToStorage();
 }
 
 function deleteNode() {
@@ -181,12 +207,9 @@ function addFood() {
 
 function validateInput() {
     let errorMsg = document.getElementById("inputError");
-    let resetBtn = document.getElementById("resetBtn");
     errorMsg.style.display = "none";
-    errorMsg.innerText = "";
     inItem.style.backgroundColor = "white";
     inCalories.style.backgroundColor = "white";
-    inDate.style.backgroundColor = "white";
     let itemRegex = new RegExp("^\s+$");
     let calRegex = new RegExp("^[0-9]+$");
     inItem.value = inItem.value.trim();
@@ -194,27 +217,28 @@ function validateInput() {
 
     if (itemRegex.test(inItem.value) || inItem.value === "") {
         inItem.style.backgroundColor = "#ffafaf";
+        inItem.focus();
         errorMsg.style.display = "block";
         errorMsg.innerText = "Error: Please enter a food item";
         return;
     }
     if (!(calRegex.test(inCalories.value)) || inCalories.value === "") {
         inCalories.style.backgroundColor = "#ffafaf";
+        inCalories.focus();
         errorMsg.style.display = "block";
-        errorMsg.innerText = "Error: Please enter a valid amount of calories";
+        errorMsg.innerText = "Error: Please enter a valid amount of calories (positive integers)";
         return;
     }
 
     if (inDate.value === "") {
-        inDate.style.backgroundColor = "ffafaf";
+        inDate.focus();
         errorMsg.style.display = "block";
-        errorMsg.innerText = "Error: Please select a date";
+        errorMsg.innerText = "Error: Please enter a date (MM/DD/YYYY)";
         return;
     }
 
     addFood();
-    inItem.focus();
-    resetBtn.click();
+    resetForm();
 }
 
 let previousWeek = function () {
@@ -317,10 +341,68 @@ function saveToStorage(){
     localStorage.setItem("dietData", dietData);
 }
 
+function switchLayout(start){
+    let winWidth = window.innerWidth;
+    let changeFlag = false;
+    if(winWidth >= 600 && (sizeToggle === false || start)){
+        sizeToggle = true;
+        changeFlag = true;
+    }
+    else if(winWidth < 600 && (sizeToggle === true || start)){
+        sizeToggle = false;
+        changeFlag = true;
+        deselectNode();
+    }
+    if(changeFlag){
+        let weekArray = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+        let sectionArray = [];
+        for(let i=0; i < 7; i++){
+            sectionArray[i] = document.getElementById(weekArray[i]);
+            sectionArray[i].children[2].classList.remove("unhide");
+            sectionArray[i].children[3].classList.remove("unhide");
+            if(sizeToggle){
+                sectionArray[i].removeEventListener("click", sectionArray[i].eventRef);
+            }
+            else{
+                sectionArray[i].addEventListener("click", sectionArray[i].eventRef = function(event){
+                    if(event.target === this || event.target === this.children[0] || event.target === this.children[1]){
+                        toggleSectionDisplay(sectionArray, i);
+                    }    
+                });
+            }   
+        }
+    }
+}
+
+function toggleSectionDisplay(week, day){
+    let clickedSection = week[day];
+    if(clickedSection.children[2].classList.contains("unhide")){
+        clickedSection.children[2].classList.remove("unhide");
+        clickedSection.children[3].classList.remove("unhide");
+        deselectNode();
+    }
+    else{
+        for(let i=0; i < 7; i++){
+            week[i].children[2].classList.remove("unhide");
+            week[i].children[3].classList.remove("unhide");
+        }
+        week[day].children[2].classList.add("unhide");
+        week[day].children[3].classList.add("unhide");
+    }
+}
+
+function resetForm(){
+    let errorMsg = document.getElementById("inputError");
+    document.getElementById("entryForm").reset();
+    errorMsg.style.display = "none";
+    inItem.style.backgroundColor = "white";
+    inCalories.style.backgroundColor = "white";
+    inItem.focus()
+}
+
 function setEvents() {
-    let itemTxt = document.getElementById("item");
-    let calTxt = document.getElementById("calories");
     let addBtn = document.getElementById("addBtn");
+    let resetBtn = document.getElementById("resetBtn");
     let prevBtn = document.getElementById("prevBtn");
     let nextBtn = document.getElementById("nextBtn");
     let consumedChk = document.getElementById("consumedChk");
@@ -331,20 +413,36 @@ function setEvents() {
     let fileInput = document.getElementById("fileInput");
     let exportBtn = document.getElementById("exportBtn");
 
-    // Uncomment these as new functions are written
-
-    // window.addEventListener("resize", myFunction);
-    itemTxt.addEventListener("keyup", function(event){
+    window.addEventListener("resize", function(){
+        switchLayout(false);
+    });
+    inItem.addEventListener("keydown", function(event){
         if(event.key === "Enter"){
             addBtn.click();
         }
     });
-    calTxt.addEventListener("keyup", function(event){
+    inCalories.addEventListener("keydown", function(event){
+        if(event.key === "Enter"){
+            addBtn.click();
+        }
+    });
+    inMealTime.addEventListener("keydown", function(event){
         if(event.key === "Enter"){
             addBtn.click();
         }
     });
     addBtn.addEventListener("click", validateInput);
+    addBtn.addEventListener("keydown", function(event){
+        if(event.key === "Enter"){
+            validateInput();
+        }
+    });
+    resetBtn.addEventListener("click", resetForm);
+    resetBtn.addEventListener("keydown", function(event){
+        if(event.key === "Enter"){
+            resetForm();
+        }
+    });
     prevBtn.addEventListener("click", previousWeek);
     nextBtn.addEventListener("click", nextWeek);
     consumedChk.addEventListener("change", toggleConsumed);
@@ -362,6 +460,7 @@ function setEvents() {
 function init(){
     setEvents();
     setToday();
+    switchLayout(true);
     loadFromStorage();
     document.getElementById("scriptCheck").remove();
     today = setChart(today);

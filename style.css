@@ -96,8 +96,10 @@ button {
 
 .hidden {display: none;}
 
+.unhide {display: block;}
+
 .dataNode {
-    margin: 10px 0 0 0;
+    margin: 10px 0 10px 0;
     padding: 10px 5px;
     border: 4px solid #2f2f007f;
     border-radius: 10px;
