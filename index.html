@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<!--
+    Written by JohnnyJoPo -- https://github.com/JohnnyJoPo
+    On behalf of: N/A (personal hobby project for use as a web development portfolio piece)
+    June 29, 2021
+    HTML file for the Diet Planner application
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Diet Planner</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="wrapper">
+        <p id="scriptCheck">This page requires JavaScript to work. Please enable JavaScript and reload this page.</p>
+        <header>
+            <h1>Weekly Diet Planner</h1>
+        </header>
+        <div id="dataEntry">
+            <p id="inputError">Error</p>
+            <form id="entryForm">
+                <label for="item" class="leftAlign">Food Item:</label>
+                <input type="text" id="item" class="rightAlign">
+                <label for="calories" class="leftAlign">Calories:</label>
+                <input type="text" id="calories" class="rightAlign">
+                <label for="foodDate" class="leftAlign">Date:</label>
+                <input type="date" id="foodDate" class="rightAlign">
+                <label for="foodTime" class="leftAlign">Meal Time:</label>
+                <select id="foodTime" class="rightAlign">
+                    <option value="0">Breakfast</option>
+                    <option value="1">Lunch</option>
+                    <option value="2">Dinner</option>
+                    <option value="3">Other</option>
+                </select>
+                <button type="button" id="addBtn">Add Food to Chart</button>
+                <button type="button" id="resetBtn">Reset Form</button>
+                <button type="button" id="prevBtn">Previous Week</button>
+                <button type="button" id="nextBtn">Next Week</button>           
+            </form>
+        </div>
+        <div id="chart">
+            <section id="sun">
+                <h2>Sunday</h2>
+                <p></p>
+                <div class="hidden"></div>
+                <p class="hidden">Calories: <span class="dailyConsumed">0</span> / <span class="dailyCalories">0</span></p>
+            </section>
+            <section id="mon">
+                <h2>Monday</h2>
+                <p></p>
+                <div class="hidden"></div>
+                <p class="hidden">Calories: <span class="dailyConsumed">0</span> / <span class="dailyCalories">0</span></p>
+            </section>
+            <section id="tue">
+                <h2>Tuesday</h2>
+                <p></p>
+                <div class="hidden"></div>
+                <p class="hidden">Calories: <span class="dailyConsumed">0</span> / <span class="dailyCalories">0</span></p>
+            </section>
+            <section id="wed">
+                <h2>Wednesday</h2>
+                <p></p>
+                <div class="hidden"></div>
+                <p class="hidden">Calories: <span class="dailyConsumed">0</span> / <span class="dailyCalories">0</span></p>
+            </section>
+            <section id="thu">
+                <h2>Thursday</h2>
+                <p></p>
+                <div class="hidden"></div>
+                <p class="hidden">Calories: <span class="dailyConsumed">0</span> / <span class="dailyCalories">0</span></p>
+            </section>
+            <section id="fri">
+                <h2>Friday</h2>
+                <p></p>
+                <div class="hidden"></div>
+                <p class="hidden">Calories: <span class="dailyConsumed">0</span> / <span class="dailyCalories">0</span></p>
+            </section>
+            <section id="sat">
+                <h2>Saturday</h2>
+                <p></p>
+                <div class="hidden"></div>
+                <p class="hidden">Calories: <span class="dailyConsumed">0</span> / <span class="dailyCalories">0</span></p>
+            </section>
+            <div id=totals>
+                <p>Total Calories Consumed: <span id="totalConsumed">0</span> / <span id="totalCalories">0</span></p>
+            </div>
+        </div>
+
+        <div id="dataManipulation">
+            <div id=consumedGrp>
+                <label for="consumedChk" id="consumedChkLbl">Item Consumed </label>
+                <input type="checkbox" id="consumedChk" disabled>
+            </div>
+            <button type="button" id="copyBtn" disabled>Copy Selected Item</button>
+            <button type="button" id="editBtn" disabled>Edit / Move Selected Item</button>
+            <button type="button" id="delBtn" disabled>Delete Selected Item</button>
+            <button type="button" id="importBtn">Import Data from File</button>
+            <input type="file" id="fileInput" accept=".json" hidden>
+            <button type="button" id="exportBtn" disabled>Export Data to File</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
