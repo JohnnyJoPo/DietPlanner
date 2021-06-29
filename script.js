@@ -9,7 +9,7 @@
 "use strict"
 
 // Global variables
-var today;
+var today = new Date();
 var foodArray = [];
 var consumedArray = [];
 var totalConsumed = 0;
