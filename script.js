@@ -114,9 +114,8 @@ function setToday(){
     let newDay = today.getDate();
     let newMonth = today.getMonth() + 1;
     let newYear = today.getFullYear();
-    let offset = today.getTimezoneOffset();
     let newDate = `${newYear}/${newMonth}/${newDay}`;
-    today = new Date(Date.parse(newDate) + (offset * 60000));
+    today = new Date(Date.parse(newDate));
 }
 
 // Sets or removes functionality for the mobile design layout depending
@@ -301,6 +300,7 @@ let nextWeek = function () {
 // to midnight the following Saturday in the current week
 // Called from multiple points in the application; Typically whenever foodArray is updated
 function setChart(displayDate) {
+    console.log(displayDate);
     let targetDay = displayDate.getDay();
     let startDay = new Date(displayDate.getTime() - (targetDay * 86400000));
     let week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
