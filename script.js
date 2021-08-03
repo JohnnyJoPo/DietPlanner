@@ -1,6 +1,6 @@
 // Written by JohnnyJoPo -- https://github.com/JohnnyJoPo
 // On behalf of: N/A (personal hobby project for use as a web development portfolio piece)
-// June 29, 2021
+// August 3, 2021
 // JavaScript file for the Diet Planner application
 
 // For clarification, in this application, a DOM element that was created by the setChart function
@@ -115,7 +115,7 @@ function setToday(){
     let newMonth = today.getMonth() + 1;
     let newYear = today.getFullYear();
     let offset = today.getTimezoneOffset();
-    let newDate = `${newYear}-${newMonth}-${newDay}`;
+    let newDate = `${newYear}/${newMonth}/${newDay}`;
     today = new Date(Date.parse(newDate) + (offset * 60000));
 }
 
@@ -269,12 +269,15 @@ let sortFood = function (a, b) {
 // Resets all form inputs and any errors displayed on the form
 // Called by clicking the "Reset Form" button or from the end of validateInput
 function resetForm(){
+    let winWidth = window.innerWidth;
     let errorMsg = document.getElementById("inputError");
     document.getElementById("entryForm").reset();
     errorMsg.style.display = "none";
     inItem.style.backgroundColor = "white";
     inCalories.style.backgroundColor = "white";
-    inItem.focus()
+    if(winWidth >= 600){
+        inItem.focus();
+    }
 }
 
 // Creates a new Date object exactly one week earlier than the current local time

@@ -1,6 +1,6 @@
 /*  Written by JohnnyJoPo -- https://github.com/JohnnyJoPo
     On behalf of: N/A (personal hobby project for use as a web development portfolio piece)
-    June 29, 2021
+    August 3, 2021
     CSS file for the Diet Planner application
 */
 
@@ -45,7 +45,7 @@ h1,
     gap: 10px;
 }
 
-#entryForm {grid-template-columns: repeat(6, 1fr);}
+#entryForm {grid-template-columns: repeat(8, 1fr);}
 
 #inputError {
     display: none;
@@ -66,11 +66,11 @@ button {
 
 .leftAlign {grid-column: 1 / span 2;}
 
-.rightAlign {grid-column: 3 / span 4;}
+.rightAlign {grid-column: 3 / span 6;}
 
-#addBtn, #prevBtn {grid-column: 1 / span 3;}
+#addBtn, #prevBtn {grid-column: 1 / span 4;}
 
-#resetBtn, #nextBtn {grid-column: 4 / span 3;}
+#resetBtn, #nextBtn {grid-column: 5 / span 4;}
 
 #chart {
     margin: 1.5em 0;
